@@ -15,7 +15,7 @@ public class Ticketmgr extends JFrame {
     private JTextField reportedtextField2;
     private JTextField severitytextField3;
     private JList<Ticket> openTicketlist1;
-    private JList<String> resolvedTicketsList;
+    private JList<Ticket> resolvedTicketsList;
     private JButton saveAndQuitButton;
     private JButton resolveSelectedTicketButton;
     private JLabel resolvedTicketLists;
@@ -31,6 +31,8 @@ public class Ticketmgr extends JFrame {
         setVisible(true);
         ticketlistModel = new DefaultListModel<>();
         openTicketlist1.setModel(ticketlistModel);
+
+
 
         openTicketlist1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         addNewTicketButton.addActionListener(new ActionListener() {
@@ -61,6 +63,21 @@ public class Ticketmgr extends JFrame {
                 Date date = new Date();
                 Ticket tm = new Ticket( desc, priority, rep, date);
                 ticketlistModel.addElement(tm);
+
+                descriptiontextField1.setText("");
+                reportedtextField2.setText("");
+                severitytextField3.setText("");
+
+
+            }
+        });
+
+        resolveSelectedTicketButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Ticket t = openTicketlist1.getSelectedValue();
+                ticketlistModel.removeElement(t);
+
 
 
             }
