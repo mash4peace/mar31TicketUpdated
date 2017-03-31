@@ -8,10 +8,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
+import java.util.*;
 
+import static java.lang.Integer.*;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -70,7 +69,7 @@ public class Ticketmgr extends JFrame {
                 }
                 int priority;
                 try {
-                    priority = Integer.parseInt(severitytextField3.getText());
+                    priority = parseInt(severitytextField3.getText());
                     if (priority < 0) {
                         showMessageDialog(Ticketmgr.this, "Please enter apositive number ");
                         return;
@@ -180,29 +179,49 @@ public class Ticketmgr extends JFrame {
         searchATicketButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int [] number = new int[ticketQue.size()];
                 int p;
+                p = parseInt((JOptionPane.showInputDialog(
+                        Ticketmgr.this, "Enter a number: ")));
+                DefaultListModel listModel = new DefaultListModel();
 
+                try {
 
-                p = Integer.parseInt(JOptionPane.showInputDialog(
-                        Ticketmgr.this, "Enter a number: "));
-                int  ok = JOptionPane.OK_OPTION;
-                for(Ticket searchTicket : ticketQue){
-                    String problem = searchTicket.getDescription();
-                    String reporter = searchTicket.getReporter();
-                    int tciketID = searchTicket.getTicketID();
-                    Date date = new Date();
-                    boolean found = false;
-                    DefaultListModel listModel = new DefaultListModel();
-                    while(!found){
-                        JOptionPane.showMessageDialog(Ticketmgr.this,
-                                "Serached ID number isnot found!!");
-                        int again = Integer.parseInt(JOptionPane.showInputDialog(
-                                Ticketmgr.this, "Enter a number: "));
-                        if(ticketQue.contains(again)){
-                            allTickets.setModel(listModel);
-                            listModel.addElement(searchTicket);
+                    BufferedReader reader = new BufferedReader(new FileReader("close_tickets.txt"));
 
+                    String line = reader.readLine();
+                    while (line != null) {
+                        //Here is my problem. I wanted to know if my input equals to 6, a number in the file.
+                        // If it's confusing please print out numbers_in_line to get numbers 6.
+                        for(Ticket t : ticketQue){
+                            if(t.ticketID == p) {
+                                System.out.println((t.getTicketID()));
+                            }
                         }
+
+
+                       //System.out.println(number_In_line);
+
+                       // allTickets.setModel(listModel);
+                       // listModel.addElement(line);
+
+
+
+
+
+
+
+
+                        line = reader.readLine();
+
+
+                    }
+                    reader.close();
+                } catch (IOException io) {
+                    System.out.println("File reading input error!!");
+                }
+
+
 
 
 
@@ -214,8 +233,9 @@ public class Ticketmgr extends JFrame {
 
 
 
-                }
-            }
+
+
+
         });
 
     }
