@@ -39,9 +39,11 @@ public class Ticket  {
         return priority;
     }
 
-    public int getTicketID() {
+    protected int getTicketID() {
         return ticketID;
     }
+    protected String getDescription(){return description;}
+    protected String getReporter(){return reporter;}
 
     public String toString(){
         return("ID: " + this.ticketID + " Issue: " + this.description + " Priority: " + 					this.priority + " Reported by: "
